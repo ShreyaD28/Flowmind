@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens & base ─────────────────────────────────── */
+
+:root {
+  color: #0f172a;
+  background-color: #f8fafc;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root { min-height: 100vh; }
+* { box-sizing: border-box; }
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+
+@keyframes flow-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flow-step-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes flow-arrow {
+  0%, 100% { opacity: 0.55; transform: translateX(0); }
+  50%       { opacity: 1;    transform: translateX(5px); }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes typing-dot {
+  0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+  40%           { opacity: 1;   transform: translateY(-3px); }
+}
+
+@keyframes spin-smooth {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes section-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Global utility classes ────────────────────────────────── */
+
+/* Page-level entrance */
+.page-enter {
+  animation: page-enter 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Section-level staggerable rise */
+.section-rise {
+  animation: section-rise 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Staggered delay helpers (apply to children) */
+.stagger-1 { animation-delay: 60ms; }
+.stagger-2 { animation-delay: 130ms; }
+.stagger-3 { animation-delay: 200ms; }
+.stagger-4 { animation-delay: 280ms; }
+.stagger-5 { animation-delay: 360ms; }
+
+/* Pipeline connector arrow pulse */
+.flow-connector {
+  animation: flow-arrow 1.6s ease-in-out infinite;
+}
+
+/* Workflow step card entrance */
+.flow-step {
+  animation: flow-step-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Fade + translate up (reused for result panels) */
+.flow-fade-up {
+  animation: flow-fade-up 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Pop-in for modals / toasts */
+.pop-in {
+  animation: pop-in 280ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ── Skeleton loader ───────────────────────────────────────── */
+
+.skeleton-block {
+  border-radius: 0.875rem;
+  background: linear-gradient(
+    90deg,
+    #e2e8f0 0%,
+    #f1f5f9 35%,
+    #f8fafc 50%,
+    #f1f5f9 65%,
+    #e2e8f0 100%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+/* ── Card hover lift ──────────────────────────────────────── */
+
+.card-lift {
+  transition:
+    transform  200ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.12);
+}
+
+/* ── AI typing dots ────────────────────────────────────────── */
+
+.ai-typing-dot {
+  animation: typing-dot 1.1s ease-in-out infinite;
+}
+
+.ai-typing-dot:nth-child(2) { animation-delay: 0.18s; }
+.ai-typing-dot:nth-child(3) { animation-delay: 0.36s; }
+
+/* ── Spinner ─────────────────────────────────────────────── */
+
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin-smooth 0.7s linear infinite;
+  vertical-align: middle;
+}
+
+/* ── Smooth interactive transitions (links, buttons) ─────── */
+
+a, button {
+  transition-property: color, background-color, border-color, opacity, transform, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: ease;
+}
