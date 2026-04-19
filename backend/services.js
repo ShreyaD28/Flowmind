@@ -231,6 +231,15 @@ class GeminiServiceError extends Error {
   }
 }
 
+function canFallbackFromGeminiExecutionError(error) {
+  if (!(error instanceof GeminiServiceError)) return false;
+  if ([408, 429, 500, 502, 503, 504].includes(error.statusCode)) return true;
+  const message = String(error.message || '').toLowerCase();
+  return ['quota', 'rate limit', 'retry', 'temporarily unavailable', 'overloaded'].some((term) =>
+    message.includes(term)
+  );
+}
+
 const TASK_SYSTEM_PROMPT = `You convert plain-English automation requests into structured JSON.
 Return only a JSON object with exactly these string keys:
 { "frequency": "", "time": "", "source": "", "action": "", "condition": "" }
@@ -300,7 +309,9 @@ async function analyzeEmailsForExecution(task, emails) {
     const raw = await callGemini(prompt, EXECUTION_SYSTEM_PROMPT, 600, { json: true });
     return parseAndValidateEmailExecution(raw);
   } catch (e) {
-    if (e instanceof EmailExecutionValidationError) return buildFallbackExecution(task, emails);
+    if (e instanceof EmailExecutionValidationError || canFallbackFromGeminiExecutionError(e)) {
+      return buildFallbackExecution(task, emails);
+    }
     throw e;
   }
 }

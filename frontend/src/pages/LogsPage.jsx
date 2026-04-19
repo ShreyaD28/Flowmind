@@ -33,6 +33,19 @@ function formatDuration(durationMs) {
   return `${(durationMs / 1000).toFixed(1)}s`;
 }
 
+function getActiveFailureHighlights(logs) {
+  const latestByAutomation = new Map();
+
+  for (const log of logs) {
+    const key = log.automationName || log.title || log.id;
+    if (!latestByAutomation.has(key)) {
+      latestByAutomation.set(key, log);
+    }
+  }
+
+  return Array.from(latestByAutomation.values()).filter((log) => log.status === 'Failed');
+}
+
 function parseLogDetails(details) {
   const text = String(details || '').trim();
   if (!text.includes('Individual email summaries:')) {
@@ -176,7 +189,11 @@ function LogsPage() {
     };
   }, [token]);
 
-  const errorLogs = useMemo(() => logs.filter((log) => log.status === 'Failed'), [logs]);
+  const errorLogs = useMemo(() => getActiveFailureHighlights(logs), [logs]);
+  const hiddenFailureCount = useMemo(() => {
+    const totalFailures = logs.filter((log) => log.status === 'Failed').length;
+    return Math.max(0, totalFailures - errorLogs.length);
+  }, [errorLogs.length, logs]);
 
   return (
     <AppShell
@@ -209,10 +226,17 @@ function LogsPage() {
               </h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-rose-700">
-              These runs stopped before completion. Review the highlighted cards to see what broke
-              and why the automation could not finish.
+              These are the latest unresolved failures for each automation, so older resolved issues
+              do not keep crowding the top of the page.
             </p>
           </div>
+
+          {hiddenFailureCount > 0 ? (
+            <div className="mt-4 rounded-2xl border border-rose-200 bg-white/80 px-4 py-3 text-sm text-rose-700">
+              {hiddenFailureCount} older failed run{hiddenFailureCount === 1 ? '' : 's'} remain in the
+              timeline below for history, but they are no longer shown as active issues here.
+            </div>
+          ) : null}
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {errorLogs.map((log) => (
