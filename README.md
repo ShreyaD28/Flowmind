@@ -1,6 +1,15 @@
 # FlowMind
 
-FlowMind is an AI-assisted Gmail workflow app that turns plain-English prompts into email automations. You can connect Gmail, preview an automation from natural language, save it, run it, and inspect detailed execution logs.
+FlowMind is an AI-powered Gmail workflow automation platform that turns plain-English prompts into actionable email workflows. Users can connect Gmail, generate automations from natural language, run tasks on demand, and inspect detailed logs with separate summaries for each matched email.
+
+## Live Demo
+
+- Live site: [https://2026-04-18-flowmind-full-build-road.vercel.app](https://2026-04-18-flowmind-full-build-road.vercel.app)
+- GitHub repository: [https://github.com/ShreyaD28/Flowmind](https://github.com/ShreyaD28/Flowmind)
+
+## Why FlowMind
+
+FlowMind is designed to make inbox automation feel approachable. Instead of building rigid rule chains manually, users describe what they want in plain English, preview the generated automation, save it, and review the result through a clean dashboard.
 
 ## What It Does
 
@@ -9,6 +18,16 @@ FlowMind is an AI-assisted Gmail workflow app that turns plain-English prompts i
 - Saves and manages automations
 - Runs automations against matching Gmail messages
 - Shows execution logs, analytics, and per-run details
+- Preserves separate summaries for individual emails instead of blending multiple emails together
+
+## Key Features
+
+- Natural-language task creation for Gmail workflows
+- Gmail OAuth connection and inbox access
+- AI-powered task preview using Gemini
+- Manual task execution from the dashboard
+- Per-email summaries in execution logs
+- Analytics and run history for visibility into automation performance
 
 ## Core Workflow
 
@@ -89,11 +108,9 @@ http://127.0.0.1:5001
 
 ## Production
 
-Live site:
+Production site:
 
-```text
-https://2026-04-18-flowmind-full-build-road.vercel.app
-```
+- [https://2026-04-18-flowmind-full-build-road.vercel.app](https://2026-04-18-flowmind-full-build-road.vercel.app)
 
 For Google OAuth in production, the OAuth client must include:
 
