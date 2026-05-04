@@ -4,7 +4,7 @@ FlowMind is an AI-powered Gmail workflow automation platform that turns plain-En
 
 ## Live Demo
 
-- Live site: [https://2026-04-18-flowmind-full-build-road.vercel.app](https://2026-04-18-flowmind-full-build-road.vercel.app)
+- Live site: [https://2026-04-18-flowmind-full-build-road.vercel.app](https://2026-04-18-flowmind-full-build-roadmap-for-claude-5i79rzdkt.vercel.app/app/logs))
 - GitHub repository: [https://github.com/ShreyaD28/Flowmind](https://github.com/ShreyaD28/Flowmind)
 
 ## Why FlowMind
